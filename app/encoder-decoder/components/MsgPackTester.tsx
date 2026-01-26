@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react'
 import { encode, decode } from '@msgpack/msgpack'
-import HeadersPanel from '@/app/home/comoponents/RequestHeadersPanel'
+import HeadersPanel from '@/app/home/components/RequestHeadersPanel'
 import HexDecodePanel from './HexDecodePanel'
-import RequestPanel from '@/app/home/comoponents/RequestPanel'
-import ResponsePanel from '@/app/home/comoponents/ResponsePanel'
+import RequestPanel from '@/app/home/components/RequestPanel'
+import ResponsePanel from '@/app/home/components/ResponsePanel'
 import URLBar from '@/app/home/URLBar'
 
 

@@ -1,14 +1,14 @@
 'use client';
 
-import RequestHeadersPanel from './comoponents/RequestHeadersPanel';
-import RequestPanel from './comoponents/RequestPanel';
+import RequestHeadersPanel from './components/RequestHeadersPanel';
+import RequestPanel from './components/RequestPanel';
 import { useState, useEffect } from 'react';
 import { Trash2 } from 'lucide-react';
 import URLBar from './URLBar';
-import ResponsePanel from "@/app/home/comoponents/ResponsePanel";
+import ResponsePanel from "@/app/home/components/ResponsePanel";
 
 
-type Endpoint = { name: string };
+type Endpoint = { name: string }; 
 type HeaderKV = { key: string; value: string };
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD';

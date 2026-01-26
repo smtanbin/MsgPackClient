@@ -1,8 +1,8 @@
 'use client'
 
-import logo from "../public/assects/144ppi/logo.png";
+import logo from "../public/assets/144ppi/logo.png";
 import Image from "next/image";
-import { Plus, Upload, MoreHorizontal, Home, Code, SlidersHorizontal } from 'lucide-react'
+import { Plus, Upload, MoreHorizontal, Home, Code, SlidersHorizontal } from 'lucide-react' 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 
