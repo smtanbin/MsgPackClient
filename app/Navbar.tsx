@@ -12,7 +12,7 @@ type HeaderProps = {
     onOpenEnvAction?: () => void
 }
 
-export default function Header({ onSaveAction, onLoadAction, onOpenEnvAction }: HeaderProps) {
+export default function Navbar({ onSaveAction, onLoadAction, onOpenEnvAction }: HeaderProps) {
     const [menuOpen, setMenuOpen] = useState(false)
     const menuRef = useRef<HTMLDivElement | null>(null)
 

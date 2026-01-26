@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import Header from '../Header'
+import Navbar from '../Navbar'
 import Footer from '../Footer'
 import EnvPanel from './EnvPanel'
 
@@ -67,7 +67,7 @@ export default function ClientShell({ children }: { children: React.ReactNode })
 
   return (
     <>
-      <Header onSaveAction={handleSave} onLoadAction={handleLoad} onOpenEnvAction={handleOpenEnv} />
+      <Navbar onSaveAction={handleSave} onLoadAction={handleLoad} onOpenEnvAction={handleOpenEnv} />
       <main>{children}</main>
       <Footer />
 
