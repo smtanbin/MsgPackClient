@@ -2,11 +2,18 @@
   "name": "msgpackclient",
   "version": "0.1.0",
   "private": true,
+  "description": "A modern, modular MessagePack testing client inspired by Postman, built with Next.js and React.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smtanbin/MsgPackClient"
+  },
+  "author": "smtanbin",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "@msgpack/msgpack": "^3.1.3",

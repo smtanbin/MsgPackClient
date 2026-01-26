@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MsgPackClient
+
+A modern, modular MessagePack testing client inspired by Postman, built with Next.js and React. Designed for easy encoding/decoding, API testing, and developer productivity.
+
+## Features
+- Encode and decode MessagePack to/from JSON and Hex
+- Multi-endpoint tabbed interface (up to 9 tabs)
+- Custom request headers and body
+- MacOS-style UI with responsive design
+- Copy buttons for JSON and Hex outputs
+- Accessible (ARIA labels, keyboard navigation)
+- Environment management
+- Encoder/Decoder tool with live size and reduction stats
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+2. **Run the development server:**
+   ```sh
+   npm run dev
+   ```
+3. **Open in browser:**
+   Visit [http://localhost:3000/home](http://localhost:3000/home)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Usage
+- **Tabs:** Add, rename, or delete endpoints. Each tab is a separate API request context.
+- **Headers:** Add default or custom headers per endpoint.
+- **Request Body:** Write JSON, see live MessagePack hex and size reduction.
+- **Encoder/Decoder:** Convert between JSON and MessagePack Hex, see size stats, copy results.
+- **Environment:** Manage base URLs and environment variables.
+- **Mobile:** Fully responsive, tabs become dropdowns.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Documentation & References
+- [MessagePack Official Site](https://msgpack.org/)
+- [MessagePack Specification](https://github.com/msgpack/msgpack/blob/master/spec.md)
+- [Project GitHub](https://github.com/smtanbin/MsgPackClient)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Accessibility
+- All interactive elements have ARIA labels and keyboard support.
+- Logo is clickable to return home.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## License
+MIT
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*Built with Next.js, TailwindCSS, and Lucide icons.*
