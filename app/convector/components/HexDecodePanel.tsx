@@ -59,7 +59,7 @@ export default function HexDecodePanel() {
   return (
     <div className="flex flex-col gap-4 h-full">
       <div className="flex items-center justify-between">
-        <strong className="text-[15px] font-semibold text-[#1d1d1f]">Decode from Hex (convector)</strong>
+        <strong className="text-[15px] font-semibold text-[#1d1d1f]">Decode from Hex (Convector)</strong>
         <span className="text-[11px] text-[#86868b] font-mono">{byteCount} bytes</span>
       </div>
 
