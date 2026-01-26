@@ -8,7 +8,7 @@ A modern MessagePack testing client built with Next.js 16.1+ and React 19, simil
 ### App Structure (Next.js App Router)
 - **[app/page.tsx](../app/page.tsx)**: Landing page with "Open Client" button redirecting to `/home`
 - **[app/home/page.tsx](../app/home/page.tsx)**: Main API testing interface with multi-tab endpoint management (up to 9 tabs)
-- **[app/encoder-decoder/page.tsx](../app/encoder-decoder/page.tsx)**: Standalone MsgPack ↔ JSON converter
+- **[app/convector/page.tsx](../app/convector/page.tsx)**: Standalone MsgPack ↔ JSON converter
 - **[app/api/proxy/route.ts](../app/api/proxy/route.ts)**: Server-side proxy to bypass CORS, handles binary MsgPack requests
 
 ### State Management Pattern
@@ -38,7 +38,7 @@ const encoded = encode(jsonObject)  // Returns Uint8Array
 const decoded = decode(uint8Array)   // Returns any
 ```
 
-Hex conversion utilities in [RequestPanel.tsx](../app/home/components/RequestPanel.tsx) and [encoder-decoder/page.tsx](../app/encoder-decoder/page.tsx):
+Hex conversion utilities in [RequestPanel.tsx](../app/home/components/RequestPanel.tsx) and [convector/page.tsx](../app/convector/page.tsx):
 ```typescript
 function bytesToHex(bytes: Uint8Array): string
 function hexToBytes(hex: string): Uint8Array | null
@@ -161,7 +161,7 @@ Do NOT suggest Redux, Zustand, or Context API. State management is intentionally
 ### Modifying MessagePack Handling
 - Encoding logic: [RequestPanel.tsx](../app/home/components/RequestPanel.tsx)
 - Decoding logic: [ResponsePanel.tsx](../app/home/components/ResponsePanel.tsx)
-- Bidirectional: [encoder-decoder/page.tsx](../app/encoder-decoder/page.tsx)
+- Bidirectional: [convector/page.tsx](../app/convector/page.tsx)
 - Proxy layer: [api/proxy/route.ts](../app/api/proxy/route.ts)
 
 ## Testing & Debugging

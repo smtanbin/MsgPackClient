@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { ArrowLeft, Binary, FileJson, Hash, Copy } from 'lucide-react'
+import { Binary, FileJson, Hash, Copy } from 'lucide-react'
 import { encode, decode } from '@msgpack/msgpack'
 
 function bytesToHex(bytes: Uint8Array) {

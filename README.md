@@ -10,7 +10,7 @@ A modern, modular MessagePack testing client inspired by Postman, built with Nex
 - Copy buttons for JSON and Hex outputs
 - Accessible (ARIA labels, keyboard navigation)
 - Environment management
-- Encoder/Decoder tool with live size and reduction stats
+- convector tool with live size and reduction stats
 
 ## Getting Started
 

@@ -2,7 +2,7 @@
 
 import logo from "../public/assets/144ppi/logo.png";
 import Image from "next/image";
-import { Plus, Upload, MoreHorizontal, Home, Code, SlidersHorizontal } from 'lucide-react' 
+import { Plus, Upload, MoreHorizontal, Home, Code, SlidersHorizontal, ChevronDown } from 'lucide-react' 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 
@@ -15,12 +15,16 @@ type HeaderProps = {
 export default function Navbar({ onSaveAction, onLoadAction, onOpenEnvAction }: HeaderProps) {
     const [menuOpen, setMenuOpen] = useState(false)
     const menuRef = useRef<HTMLDivElement | null>(null)
+    const [pagesOpen, setPagesOpen] = useState(false)
+    const pagesRef = useRef<HTMLDivElement | null>(null)
 
     useEffect(() => {
         function onDoc(e: MouseEvent) {
-            if (!menuRef.current) return
-            if (e.target instanceof Node && !menuRef.current.contains(e.target)) {
+            if (menuRef.current && e.target instanceof Node && !menuRef.current.contains(e.target)) {
                 setMenuOpen(false)
+            }
+            if (pagesRef.current && e.target instanceof Node && !pagesRef.current.contains(e.target)) {
+                setPagesOpen(false)
             }
         }
         function onKey(e: KeyboardEvent) {
@@ -55,17 +59,29 @@ export default function Navbar({ onSaveAction, onLoadAction, onOpenEnvAction }: 
 
             {/* Desktop controls */}
             <div className="hidden md:flex items-center gap-2">
-                <Link href="/home" className="px-3 py-1 rounded-md text-sm text-zinc-700 bg-white/60 border border-gray-200 hover:bg-gray-50 flex items-center">
+                <div className="relative" ref={pagesRef}>
+                  <button
+                    onClick={() => setPagesOpen(s => !s)}
+                    aria-expanded={pagesOpen}
+                    className="px-3 py-1 rounded-md text-sm text-zinc-700 bg-white/60 border border-gray-200 hover:bg-gray-50 flex items-center"
+                  >
                     <Home className="w-4 h-4 mr-2 text-zinc-700" />
                     Home
-                </Link>
-
-                <Link href="/encoder-decoder" className="px-3 py-1 rounded-md text-sm text-zinc-700 bg-white/60 border border-gray-200 hover:bg-gray-50 flex items-center">
-                    <Code className="w-4 h-4 mr-2 text-zinc-700" />
-                    Encoder/Decoder
-                </Link>
-
-
+                    <ChevronDown className="w-4 h-4 ml-2 text-zinc-500" />
+                  </button>
+                  {pagesOpen && (
+                    <div className="absolute right-0 mt-2 w-36 bg-white rounded-md shadow-lg border border-gray-100 py-1 z-40">
+                      <Link href="/home" className="block px-3 py-2 text-sm text-zinc-700 hover:bg-gray-50 flex items-center">
+                        <Home className="w-4 h-4 mr-2 text-zinc-700" />
+                        Home
+                      </Link>
+                      <Link href="/convector" className="block px-3 py-2 text-sm text-zinc-700 hover:bg-gray-50 flex items-center">
+                        <Code className="w-4 h-4 mr-2 text-zinc-700" />
+                        Convector
+                      </Link>
+                    </div>
+                  )}
+                </div>
 
                 <label className="relative inline-flex items-center px-3 py-1 rounded-md text-sm text-zinc-700 bg-white/60 border border-gray-200 hover:bg-gray-50 cursor-pointer">
                     <Upload className="w-4 h-4 mr-2" />
@@ -120,12 +136,12 @@ export default function Navbar({ onSaveAction, onLoadAction, onOpenEnvAction }: 
                         </Link>
 
                         <Link
-                            href="/encoder-decoder"
+                            href="/convector"
                             onClick={() => setMenuOpen(false)}
                             className="w-full text-left px-3 py-2 text-sm text-zinc-700 hover:bg-gray-50 flex items-center"
                         >
                             <Code className="w-4 h-4 mr-2 text-zinc-700" />
-                            Encoder/Decoder
+                            convector
                         </Link>
 
                         {onOpenEnvAction && (
