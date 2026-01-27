@@ -2,26 +2,47 @@
 
 import { useEffect, useState } from 'react'
 import EndpointTabs from '@/app/home/EndpointTabs'
+import { getItem, setItem } from '@/app/utils/db'
 
 type Endpoint = { name: string; url?: string }
 
 export default function HomeEndpointTabs() {
-  const [endpoints, setEndpoints] = useState<Endpoint[]>(() => {
-    try {
-      const raw = localStorage.getItem('mpc-endpoints')
-      return raw ? JSON.parse(raw) : [{ name: 'Endpoint 1', url: '' }]
-    } catch {
-      return [{ name: 'Endpoint 1', url: '' }]
-    }
-  })
-  const [activeIdx, setActiveIdx] = useState<number>(() => {
-    try { return Number(localStorage.getItem('mpc-active-ep') || '0') } catch { return 0 }
-  })
+  const [endpoints, setEndpoints] = useState<Endpoint[]>([])
+  const [activeIdx, setActiveIdx] = useState<number>(0)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    try { localStorage.setItem('mpc-endpoints', JSON.stringify(endpoints)) } catch {}
-  }, [endpoints])
-  useEffect(() => { try { localStorage.setItem('mpc-active-ep', String(activeIdx)) } catch {} }, [activeIdx])
+    const loadState = async () => {
+      try {
+        const raw = await getItem('mpc-endpoints')
+        const eps = raw ? JSON.parse(raw) : [{ name: 'Endpoint 1', url: '' }]
+        setEndpoints(eps)
+        const idx = Number(await getItem('mpc-active-ep') || '0')
+        setActiveIdx(idx)
+      } catch {
+        setEndpoints([{ name: 'Endpoint 1', url: '' }])
+        setActiveIdx(0)
+      }
+      setMounted(true)
+    }
+    loadState()
+  }, [])
+
+  useEffect(() => {
+    if (!mounted) return
+    const saveEndpoints = async () => {
+      try { await setItem('mpc-endpoints', JSON.stringify(endpoints)) } catch {}
+    }
+    saveEndpoints()
+  }, [endpoints, mounted])
+
+  useEffect(() => {
+    if (!mounted) return
+    const saveActiveIdx = async () => {
+      try { await setItem('mpc-active-ep', String(activeIdx)) } catch {}
+    }
+    saveActiveIdx()
+  }, [activeIdx, mounted])
 
   const handleSelect = (idx: number) => {
     setActiveIdx(idx)

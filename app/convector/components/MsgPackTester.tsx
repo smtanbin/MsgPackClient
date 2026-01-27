@@ -6,6 +6,7 @@ import HexDecodePanel from './HexDecodePanel'
 import RequestPanel from '@/app/home/components/RequestPanel'
 import ResponsePanel from '@/app/home/components/ResponsePanel'
 import URLBar from '@/app/home/URLBar'
+import { getItem, setItem } from '@/app/utils/db'
 
 
 function bytesToHex(bytes: Uint8Array) {
@@ -40,48 +41,38 @@ function resolveUrl(input: string, baseUrl: string) {
 }
 
 export default function MsgPackTester({ baseUrl, envVars }: Props) {
-  const [url, setUrl] = useState(() => {
-    try {
-      return localStorage.getItem('mpc-url') || 'https://httpbin.org/post'
-    } catch {
-      return 'https://httpbin.org/post'
-    }
-  })
-  const [method, setMethod] = useState(() => {
-    try {
-      return (localStorage.getItem('mpc-method') as string) || 'POST'
-    } catch (e: unknown) {
-      void e
-      return 'POST'
-    }
-  })
-  const [requestText, setRequestText] = useState(() => {
-    try {
-      return localStorage.getItem('mpc-request') || '{\n  "hello": "world"\n}'
-    } catch {
-      return '{\n  "hello": "world"\n}'
-    }
-  })
+  const [url, setUrl] = useState('https://httpbin.org/post')
+  const [method, setMethod] = useState('POST')
+  const [requestText, setRequestText] = useState('{\n  "hello": "world"\n}')
   const [responseDecoded, setResponseDecoded] = useState<unknown | null>(null)
   const [responseRaw, setResponseRaw] = useState<string>('')
   const [statusLine, setStatusLine] = useState<string>('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [customHeaders, setCustomHeaders] = useState<Array<{ key: string; value: string }>>(() => {
-    try {
-      const raw = localStorage.getItem('mpc-headers')
-      return raw ? JSON.parse(raw) : []
-    } catch {
-      return []
+  const [customHeaders, setCustomHeaders] = useState<Array<{ key: string; value: string }>>([])
+  const [leftTab, setLeftTab] = useState<'json' | 'hex'>('json')
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    const loadState = async () => {
+      try {
+        const storedUrl = await getItem('mpc-url')
+        if (storedUrl) setUrl(storedUrl)
+        const storedMethod = await getItem('mpc-method')
+        if (storedMethod) setMethod(storedMethod)
+        const storedRequest = await getItem('mpc-request')
+        if (storedRequest) setRequestText(storedRequest)
+        const storedHeaders = await getItem('mpc-headers')
+        if (storedHeaders) setCustomHeaders(JSON.parse(storedHeaders))
+        const storedLeftTab = await getItem('mpc-left-tab')
+        if (storedLeftTab === 'json' || storedLeftTab === 'hex') setLeftTab(storedLeftTab)
+      } catch (e) {
+        console.error('Failed to load state:', e)
+      }
+      setMounted(true)
     }
-  })
-  const [leftTab, setLeftTab] = useState<'json' | 'hex'>(() => {
-    try {
-      return ((localStorage.getItem('mpc-left-tab') as 'json' | 'hex') || 'json')
-    } catch {
-      return 'json'
-    }
-  })
+    loadState()
+  }, [])
 
   // Expose state collectors (single tool)
   useEffect(() => {
@@ -110,38 +101,58 @@ export default function MsgPackTester({ baseUrl, envVars }: Props) {
   }, [url, method, requestText, customHeaders, leftTab])
 
   useEffect(() => {
-    try {
-      localStorage.setItem('mpc-method', method)
-    } catch (e: unknown) {
-      void e
+    if (!mounted) return
+    const saveMethod = async () => {
+      try {
+        await setItem('mpc-method', method)
+      } catch (e: unknown) {
+        void e
+      }
     }
-  }, [method])
+    saveMethod()
+  }, [method, mounted])
 
   useEffect(() => {
-    try {
-      localStorage.setItem('mpc-url', url)
-    } catch (e) { void e }
-  }, [url])
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('mpc-request', requestText)
-    } catch (e) { void e }
-  }, [requestText])
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('mpc-headers', JSON.stringify(customHeaders))
-    } catch (e) { void e }
-  }, [customHeaders])
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('mpc-left-tab', leftTab)
-    } catch {
-      // ignore
+    if (!mounted) return
+    const saveUrl = async () => {
+      try {
+        await setItem('mpc-url', url)
+      } catch (e) { void e }
     }
-  }, [leftTab])
+    saveUrl()
+  }, [url, mounted])
+
+  useEffect(() => {
+    if (!mounted) return
+    const saveRequest = async () => {
+      try {
+        await setItem('mpc-request', requestText)
+      } catch (e) { void e }
+    }
+    saveRequest()
+  }, [requestText, mounted])
+
+  useEffect(() => {
+    if (!mounted) return
+    const saveHeaders = async () => {
+      try {
+        await setItem('mpc-headers', JSON.stringify(customHeaders))
+      } catch (e) { void e }
+    }
+    saveHeaders()
+  }, [customHeaders, mounted])
+
+  useEffect(() => {
+    if (!mounted) return
+    const saveLeftTab = async () => {
+      try {
+        await setItem('mpc-left-tab', leftTab)
+      } catch {
+        // ignore
+      }
+    }
+    saveLeftTab()
+  }, [leftTab, mounted])
 
   async function send() {
     setError(null)

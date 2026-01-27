@@ -83,17 +83,36 @@ export default function EndpointTabs({ endpoints, activeIdx, onSelect, onAdd, on
             <div key={idx} className="relative">
               <div className="inline-flex items-center">
                 {editingIdx === idx ? (
-                  <input
-                    autoFocus
-                    value={draftName}
-                    onChange={(e) => setDraftName(e.target.value)}
-                    onBlur={commitEdit}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') commitEdit()
-                      if (e.key === 'Escape') cancelEdit()
-                    }}
-                    className="px-3 py-1 text-[13px] rounded-full bg-white border border-gray-200 text-[#1d1d1f] font-medium"
-                  />
+                  <div className="flex items-center gap-2">
+                    <input
+                      autoFocus
+                      value={draftName}
+                      onChange={(e) => setDraftName(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') commitEdit()
+                        if (e.key === 'Escape') cancelEdit()
+                      }}
+                      className="px-3 py-1 text-[13px] rounded-full bg-error border border-gray-200 text-[#1d1d1f] font-medium"
+                    />
+                    <button
+                      onClick={commitEdit}
+                      className="p-1 bg-black text-white hover:bg-gray-600 rounded-full transition-all active:scale-95 shadow-sm hover:shadow-md"
+                      title="Save name"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={cancelEdit}
+                      className="p-1 text-zinc-400 hover:text-zinc-600 rounded-full transition-all active:scale-95"
+                      title="Cancel"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
                 ) : (
                   <button
                     id={`endpoint-tab-${idx}`}
@@ -129,7 +148,7 @@ export default function EndpointTabs({ endpoints, activeIdx, onSelect, onAdd, on
         {/* New button */}
         <div className="flex-none">
           <button
-            className={`h-10 px-4 text-sm rounded-full ${endpoints.length >= 9 ? 'text-gray-300 cursor-not-allowed' : 'text-[#86868b] hover:text-[#1d1d1f] bg-white border border-gray-200'}`}
+            className={`h-10 px-4 text-sm rounded-full ${endpoints.length >= 9 ? 'text-gray-300 cursor-not-allowed' : 'text-[#86868b] hover:text-[#1d1d1f] bg-white border border-gray-200 hover:bg-gray-50'}`}
             onClick={() => { if (endpoints.length < 9) onAdd() }}
             aria-label="Add endpoint"
             aria-disabled={endpoints.length >= 9}

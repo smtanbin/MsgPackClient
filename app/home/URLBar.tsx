@@ -44,11 +44,11 @@ export default function URLBar({ method, url, baseUrl, loading, onMethodChange, 
           {/* Top row (mobile): Method + Send */}
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="relative">
-              <button
+                <button
                   ref={btnRef}
                   onClick={() => setOpen(v => !v)}
-                  className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-blue-500"
-              >
+                  className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-blue-500 focus:shadow-lg focus:shadow-blue-500/20 text-zinc-800"
+                >
                 <span className={`w-2.5 h-2.5 rounded-full ${methodColors[method as keyof typeof methodColors]?.split(' ')[0] || 'bg-gray-400'}`} />
                 {method}
                 <svg className={`w-4 h-4 transition-transform ${open ? 'rotate-180' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -57,17 +57,17 @@ export default function URLBar({ method, url, baseUrl, loading, onMethodChange, 
               </button>
 
               {open && (
-                  <ul
+                    <ul
                       ref={menuRef}
                       className="absolute left-0 mt-2 w-44 bg-white border border-gray-200 rounded-xl shadow-xl z-50 overflow-hidden"
-                  >
+                    >
                     {methods.map((m) => (
                         <li key={m}>
                           <button
                               onClick={() => { onMethodChange(m); setOpen(false) }}
-                              className={`w-full px-4 py-3 text-left text-sm flex items-center gap-3 hover:bg-gray-50 ${
-                                  m === method ? 'bg-blue-50 text-blue-700' : ''
-                              }`}
+                                className={`w-full px-4 py-3 text-left text-sm flex items-center gap-3 hover:bg-gray-50 ${
+                                  m === method ? 'bg-blue-50 text-blue-700' : 'text-zinc-800'
+                                }`}
                           >
                             <span className={`w-2.5 h-2.5 rounded-full ${methodColors[m]?.split(' ')[0]}`} />
                             {m}
@@ -100,10 +100,10 @@ export default function URLBar({ method, url, baseUrl, loading, onMethodChange, 
             )}
 
             <input
-                value={url}
-                onChange={(e) => onUrlChange(e.target.value)}
-                placeholder={baseUrl ? '/users' : 'https://api.example.com'}
-                className="flex-1 bg-transparent text-sm outline-none"
+              value={url}
+              onChange={(e) => onUrlChange(e.target.value)}
+              placeholder={baseUrl ? '/users' : 'https://api.example.com'}
+              className="flex-1 bg-transparent text-sm outline-none text-zinc-800 focus:ring-2 focus:ring-primary/20 focus:shadow-lg focus:shadow-primary/20"
             />
           </div>
 

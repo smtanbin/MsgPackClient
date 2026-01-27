@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { decode } from '@msgpack/msgpack'
+import { getItem, setItem } from '@/app/utils/db'
 
 function hexToBytes(input: string): { bytes: Uint8Array | null; error: string | null } {
   const trimmed = input.trim()
@@ -21,13 +22,19 @@ function hexToBytes(input: string): { bytes: Uint8Array | null; error: string | 
 }
 
 export default function HexDecodePanel() {
-  const [hexText, setHexText] = useState(() => {
-    try {
-      return localStorage.getItem('mpc-hex') || ''
-    } catch {
-      return ''
+  const [hexText, setHexText] = useState('')
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    const loadHex = async () => {
+      try {
+        const stored = await getItem('mpc-hex')
+        if (stored) setHexText(stored)
+      } catch {}
+      setMounted(true)
     }
-  })
+    loadHex()
+  }, [])
 
   const { bytes, error: parseErr } = useMemo(() => hexToBytes(hexText), [hexText])
   const { decoded, decodeErr } = useMemo(() => {
@@ -41,12 +48,15 @@ export default function HexDecodePanel() {
   const byteCount = bytes ? bytes.length : 0
 
   // Persist hex text
-  try {
-    // Wrap in try to avoid SSR issues
-    // Save lazily when hexText changes
-    // We avoid useEffect to keep the component simple; localStorage set is cheap
-    localStorage.setItem('mpc-hex', hexText)
-  } catch {}
+  useEffect(() => {
+    if (!mounted) return
+    const saveHex = async () => {
+      try {
+        await setItem('mpc-hex', hexText)
+      } catch {}
+    }
+    saveHex()
+  }, [hexText, mounted])
 
   const prettyJson = (obj: unknown) => {
     try {

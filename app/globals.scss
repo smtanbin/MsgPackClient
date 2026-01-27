@@ -1,0 +1,187 @@
+@use "sass:color";
+@import "tailwindcss";
+
+/* =========================
+   BASE COLORS
+========================= */
+$primary: #007BFF; // titanium gray
+$bg-light: #8C8A80; // soft gray background
+$text-light: #1A1C18; // darker for readability
+$accent-blue: #8C8A80; // techy, bright blue
+
+
+// $primary: #6E6C64; // titanium gray
+// $bg-light: #8C8A80; // soft gray background
+// $text-light: #1A1C18; // darker for readability
+// $accent-blue: #007BFF; // techy, bright blue
+
+/* =========================
+   PRIMARY SCALE (auto)
+========================= */
+$primary-50: color.mix(white, $primary, 90%);
+$primary-100: color.mix(white, $primary, 75%);
+$primary-200: color.mix(white, $primary, 60%);
+$primary-300: color.mix(white, $primary, 45%);
+$primary-400: color.mix(white, $primary, 25%);
+$primary-500: $primary;
+$primary-600: color.mix(black, $primary, 10%);
+$primary-700: color.mix(black, $primary, 25%);
+$primary-800: color.mix(black, $primary, 40%);
+$primary-900: color.mix(black, $primary, 55%);
+
+$primary-hover: color.mix(black, $primary, 15%);
+$primary-active: color.mix(black, $primary, 25%);
+$primary-glow: color.change($primary, $alpha: 0.12);
+$primary-deep: color.mix(#020617, $primary, 70%);
+
+/* Accent scale */
+$accent-50: color.mix(white, $accent-blue, 80%);
+$accent-100: color.mix(white, $accent-blue, 60%);
+$accent-200: $accent-blue;
+$accent-300: color.mix(black, $accent-blue, 10%);
+$accent-400: color.mix(black, $accent-blue, 25%);
+
+/* =========================
+   CSS VARIABLES EXPORT
+========================= */
+:root {
+  --color-primary: #{$primary};
+  --color-primary-50: #{$primary-50};
+  --color-primary-100: #{$primary-100};
+  --color-primary-200: #{$primary-200};
+  --color-primary-300: #{$primary-300};
+  --color-primary-400: #{$primary-400};
+  --color-primary-500: #{$primary-500};
+  --color-primary-600: #{$primary-600};
+  --color-primary-700: #{$primary-700};
+  --color-primary-800: #{$primary-800};
+  --color-primary-900: #{$primary-900};
+  --color-primary-hover: #{$primary-hover};
+  --color-primary-active: #{$primary-active};
+  --color-primary-glow: #{$primary-glow};
+  --color-primary-deep: #{$primary-deep};
+
+  --color-bg: #{$bg-light};
+  --color-text: #{$text-light};
+
+  /* Accent blue */
+  --color-accent: #{$accent-blue};
+  --color-accent-50: #{$accent-50};
+  --color-accent-100: #{$accent-100};
+  --color-accent-200: #{$accent-200};
+  --color-accent-300: #{$accent-300};
+  --color-accent-400: #{$accent-400};
+
+  --color-nav-bg: rgba(255, 255, 255, 0.48);
+}
+
+/* =========================
+   UTILITIES
+========================= */
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-primary-50 {
+  background-color: var(--color-primary-50);
+}
+
+.bg-primary-100 {
+  background-color: var(--color-primary-100);
+}
+
+.bg-primary-200 {
+  background-color: var(--color-primary-200);
+}
+
+.bg-primary-300 {
+  background-color: var(--color-primary-300);
+}
+
+.bg-primary-400 {
+  background-color: var(--color-primary-400);
+}
+
+.bg-primary-500 {
+  background-color: var(--color-primary-500);
+}
+
+.bg-primary-600 {
+  background-color: var(--color-primary-600);
+}
+
+.bg-primary-700 {
+  background-color: var(--color-primary-700);
+}
+
+.bg-primary-800 {
+  background-color: var(--color-primary-800);
+}
+
+.bg-primary-900 {
+  background-color: var(--color-primary-900);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.bg-accent {
+  background-color: var(--color-accent);
+}
+
+
+.text-accent {
+  color: var(--color-accent);
+}
+
+/* Light backgrounds/text */
+.bg-light {
+  background-color: var(--color-bg);
+}
+
+.text-light {
+  color: var(--color-text);
+}
+
+/* =========================
+   ANIMATED BUTTON
+========================= */
+@keyframes shine {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.button-bg {
+  background: conic-gradient(from 0deg,
+      var(--color-primary),
+      var(--color-primary-700),
+      #000,
+      var(--color-primary),
+      var(--color-primary-800));
+  background-size: 300% 300%;
+  animation: shine 6s ease-out infinite;
+}
+
+/* =========================
+   BASE STYLES
+========================= */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', system-ui;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--color-text);
+}
+
+header {
+  transition: padding 0.4s ease, background-color 0.4s ease;
+}

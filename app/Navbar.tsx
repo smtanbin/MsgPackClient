@@ -1,10 +1,11 @@
 'use client'
 
-// Use SVG logos (light/dark) directly
-import { Plus, Upload, MoreHorizontal, Home, Code, FileJson, Github, Download, Settings, Sun, Moon, ChevronDown, ToolCase, GitPullRequestArrow } from 'lucide-react'
+import { Upload, Home, Code, Download, Github, Settings, ChevronDown, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import logo from '../app/icon0.svg'
+
 
 type HeaderProps = {
   onSaveAction: () => void
@@ -12,126 +13,99 @@ type HeaderProps = {
   onOpenEnvAction?: () => void
 }
 
-export default function Navbar({ onSaveAction, onLoadAction, onOpenEnvAction }: HeaderProps) {
+export default function Navbar({ onSaveAction, onLoadAction }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false)
-  const menuRef = useRef<HTMLDivElement | null>(null)
-  const [pagesOpen, setPagesOpen] = useState(false)
-  const pagesRef = useRef<HTMLDivElement | null>(null)
-
-  // Actions dropdown state (Import / Export)
   const [actionsOpen, setActionsOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const menuRef = useRef<HTMLDivElement | null>(null)
   const actionsRef = useRef<HTMLDivElement | null>(null)
 
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    try {
-      return (localStorage.getItem('mpc-theme') as 'light' | 'dark') || 'light'
-    } catch { return 'light' }
-  })
-
-  const iconColor = theme === 'dark' ? 'text-white' : 'text-primary'
-  const textTone = theme === 'dark' ? 'text-white' : 'text-zinc-800'
+  useEffect(() => setMounted(true), [])
 
   useEffect(() => {
-    function onDoc(e: MouseEvent) {
+    function handleClickOutside(e: MouseEvent) {
       if (menuRef.current && e.target instanceof Node && !menuRef.current.contains(e.target)) {
         setMenuOpen(false)
-      }
-      if (pagesRef.current && e.target instanceof Node && !pagesRef.current.contains(e.target)) {
-        setPagesOpen(false)
       }
       if (actionsRef.current && e.target instanceof Node && !actionsRef.current.contains(e.target)) {
         setActionsOpen(false)
       }
     }
-    function onKey(e: KeyboardEvent) {
+    function handleEsc(e: KeyboardEvent) {
       if (e.key === 'Escape') setMenuOpen(false)
     }
-    document.addEventListener('click', onDoc)
-    document.addEventListener('keydown', onKey)
+
+    document.addEventListener('click', handleClickOutside)
+    document.addEventListener('keydown', handleEsc)
     return () => {
-      document.removeEventListener('click', onDoc)
-      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('click', handleClickOutside)
+      document.removeEventListener('keydown', handleEsc)
     }
   }, [])
 
-  // Apply theme on mount and when it changes
-  useEffect(() => {
-    try {
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark')
-        localStorage.setItem('mpc-theme', 'dark')
-      } else {
-        document.documentElement.classList.remove('dark')
-        localStorage.setItem('mpc-theme', 'light')
-      }
-    } catch { }
-  }, [theme])
+
 
   return (
-    
-    <header className={`sticky top-0 h-[70px] w-full px-6 md:px-16 lg:px-24 xl:px-32 flex items-center justify-between z-40 transition-all backdrop-blur-xl shadow-sm ${theme === 'dark'
-        ? 'bg-black text-white'
-        : 'bg-white color-primary'
-      }`}>
+    <header
+      className="sticky top-0 z-50 flex items-center justify-between px-8 py-4 md:py-5 w-full max-w-none rounded-none mx-0 bg-transparent backdrop-blur-2xl shadow-none"
+      style={{ backgroundColor: 'var(--color-nav-bg)' }}
+    >
       <div className="flex items-center gap-3">
-        <a href="/home" aria-label="Go to Home" className="flex items-center gap-3 focus:outline-none">
- 
-          <Image src={theme === 'dark' ? '/assets/SVG/logo.svg' : '/assets/SVG/logo-light.svg'} alt="MsgPack Logo" width={32} height={32} className="h-8 w-8 rounded-md" />
-        </a>
-        <div className="flex flex-col leading-tight ">
-          <h1 className="text-[17px] font-semibold">MsgPack Tester</h1>
-          <p className="text-[12px] text-primary/80">Encode & decode MessagePack</p>
+        <Link href="/home" className="flex items-center gap-3 focus:outline-none" aria-label="Go to Home">
+          <Image
+            src={logo}
+            alt="MsgPack Logo"
+            width={32}
+            height={32}
+            className="h-8 w-8 rounded-md"
+          />
+        </Link>
+        <div className="flex flex-col leading-tight">
+          <h1 className="text-[15px] md:text-[17px] text-primary font-semibold">Pack Tester</h1>
+          <p className="text-[11px] md:text-[12px] text-gray-500">Encode & decode MessagePack</p>
         </div>
       </div>
-      
 
-      {/* Desktop controls */}
-      <div className="hidden md:flex items-center gap-6">
-       
-        <Link href="/home" 
-          style={theme === 'dark' ? { backgroundColor: '#1F2937' } : { backgroundColor: 'var(--color-primary-100)' }}
-        className="hidden md:inline-flex text-sm hover:opacity-90 active:scale-95 transition-all w-36 h-10 rounded-full items-center justify-center px-3 py-2">
-          <ToolCase className='w-5 h-5 mr-2' />   Client
+      <nav
+        ref={menuRef}
+        className={` max-md:absolute max-md:top-0 max-md:left-0 max-md:overflow-hidden items-center justify-center max-md:h-full max-md:w-0 transition-[width] flex-col md:flex-row flex gap-5 text-sm font-normal md:flex-1 md:justify-end ${menuOpen ? 'max-md:w-full' : 'max-md:w-0'
+          }`}
+      >
+        <Link
+          href="/home"
+          onClick={() => setMenuOpen(false)}
+          className="px-5 py-2 rounded-full text-sm font-medium bg-primary text-white hover:bg-primary/90 transition inline-flex items-center gap-2"
+        >
+          <Home className="w-4 h-4" />
+          Client
         </Link>
 
-   
+        <Link href="/convector" onClick={() => setMenuOpen(false)} className="hover:text-primary inline-flex items-center gap-2">
+          <Code className="w-4 h-4" />
+          Converter
+        </Link>
 
-        <div className="relative" ref={pagesRef}>
-          <button
-            onClick={() => setPagesOpen(s => !s)}
-            aria-expanded={pagesOpen}
-            className="flex items-center gap-2 px-3 py-1 rounded-md text-sm hover:opacity-80"
-            title="Documents"
-          >
-            <FileJson className={`w-5 h-5`} />   <span>Documents</span>
-          </button>
-          {pagesOpen && (
-            <div className="absolute right-0 mt-2 w-40  rounded-md shadow-lg border border-gray-100 py-1 z-40 dark:bg-zinc-900 dark:border-zinc-800">
-              <Link href="/convator" className="block px-3 py-2 text-sm text-zinc-700 dark:text-zinc-200 hover:bg-gray-50 dark:hover:bg-zinc-800 flex items-center gap-2" title="Converter">
-                <Code className={`w-4 h-4`} />
-                Converter
-              </Link>
-              <a href="https://github.com/smtanbin/MsgPackClient" target="_blank" rel="noreferrer" className="block px-3 py-2 text-sm text-zinc-700 dark:text-zinc-200 hover:bg-gray-50 dark:hover:bg-zinc-800 flex items-center gap-2" title="Project">
-                <GitPullRequestArrow className={`w-4 h-4 `} />  
-                Project
-              </a>
-            </div>
-          )}
-        </div>
-        
+        <a href="https://github.com/smtanbin/MsgPackClient" target="_blank" rel="noreferrer" className="hover:text-primary inline-flex items-center gap-2">
+          <Github className="w-4 h-4" />
+          Project
+        </a>
 
         <div className="relative" ref={actionsRef}>
           <button
             onClick={() => setActionsOpen(s => !s)}
             className="flex items-center gap-2 px-3 py-1 rounded-md text-sm hover:opacity-80"
+            title="Settings"
+            aria-expanded={actionsOpen}
           >
-            <Settings className={`w-5 h-5`} />
+            <Settings className="w-4 h-4" />
             <span>Settings</span>
+            <ChevronDown className={`w-4 h-4 transition-transform ${actionsOpen ? 'rotate-180' : ''}`} />
           </button>
+
           {actionsOpen && (
-            <div className="absolute right-0 mt-2 w-44 bg-white rounded-md shadow-lg border border-gray-100 py-1 z-40 dark:bg-zinc-900 dark:border-zinc-800">
-              <label className="block w-full text-left px-3 py-2 text-sm text-zinc-700 dark:text-zinc-200 hover:bg-gray-50 dark:hover:bg-zinc-800 cursor-pointer flex items-center gap-2">
-                <Download className={`w-4 h-4`} />
+            <div className="absolute right-0 mt-2 w-44 bg-white rounded-md shadow-lg border border-gray-100 py-1 z-40">
+              <label className="block w-full text-left px-3 py-2 text-sm text-zinc-700 hover:bg-gray-50 cursor-pointer flex items-center gap-2">
+                <Download className="w-4 h-4" />
                 <span>Import</span>
                 <input
                   type="file"
@@ -152,117 +126,27 @@ export default function Navbar({ onSaveAction, onLoadAction, onOpenEnvAction }: 
                   }}
                 />
               </label>
-       
-              <button onClick={() => { onSaveAction(); setActionsOpen(false) }} className="w-full text-left px-3 py-2 text-sm text-white dark:text-zinc-200  flex items-center gap-2">
-                <Upload className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-white'}`} />
+
+              <button
+                onClick={() => {
+                  onSaveAction()
+                  setActionsOpen(false)
+                }}
+                className="w-full text-left px-3 py-2 text-sm text-primary flex items-center gap-2"
+              >
+                <Upload className="w-4 h-4 text-white" />
                 Export
               </button>
             </div>
           )}
         </div>
 
-        <button
-          onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
-          className={`px-2 py-1 rounded-md text-sm transition-colors flex items-center ${theme === 'dark' ? 'text-white/80 border border-white/20 hover:text-white' : 'text-zinc-700 border border-zinc-200 hover:text-zinc-900'}`}
-          title="Toggle theme"
-        >
-          {theme === 'dark' ? <Sun className={`w-4 h-4 ${iconColor}`} /> : <Moon className={`w-4 h-4 ${iconColor}`} />}
+        <button type="button" onClick={() => setMenuOpen(false)} className="md:hidden text-gray-600" aria-label="Close menu">
+          <X className="w-6 h-6" />
         </button>
-      </div>
+      </nav>
 
-      {/* Mobile controls */}
-      <div className="md:hidden relative" ref={menuRef}>
-        <button
-          onClick={() => setMenuOpen((s) => !s)}
-          aria-label="Open menu"
-          aria-expanded={menuOpen}
-          className={`p-2 rounded-md hover:bg-white/10 transition-colors ${textTone}`}
-        >
-          <MoreHorizontal className={`w-5 h-5 ${iconColor}`} />
-        </button>
-
-        {menuOpen && (
-          <div className="absolute top-[70px] right-0 w-[260px] p-4 z-40 border border-white/10 bg-white/90 dark:bg-black/80 backdrop-blur-xl rounded-xl shadow-lg">
-            <ul className="flex flex-col space-y-3 text-white">
-              <li>
-                <Link href="/home" onClick={() => setMenuOpen(false)} className="block text-white text-sm hover:opacity-80 flex items-center gap-2">
-                  <Home className={`w-4 h-4 ${iconColor}`} />
-                  <span>Client</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/convator" onClick={() => setMenuOpen(false)} className="block text-white text-sm hover:opacity-80 flex items-center gap-2">
-                  <Code className={`w-4 h-4 ${iconColor}`} />
-                  <span>Converter</span>
-                </Link>
-              </li>
-              <li>
-                <a href="https://github.com/smtanbin/MsgPackClient" target="_blank" rel="noreferrer" className="block text-white text-sm hover:opacity-80 flex items-center gap-2">
-                  <Github className={`w-4 h-4 ${iconColor}`} />
-                  <span>Project</span>
-                </a>
-              </li>
-              {onOpenEnvAction && (
-                <li>
-                  <button
-                    type="button"
-                    onClick={() => { onOpenEnvAction(); setMenuOpen(false) }}
-                    className="block text-white text-sm hover:opacity-80 flex items-center gap-2"
-                  >
-                    <Settings className={`w-4 h-4 ${iconColor}`} />
-                    <span>Environment</span>
-                  </button>
-                </li>
-              )}
-
-              <li className="border-t border-white/20 pt-3">
-                <div className="flex flex-col gap-3">
-                  <button
-                    onClick={() => { onSaveAction(); setMenuOpen(false) }}
-                    className="w-full text-left px-3 py-2 text-sm text-white bg-white/10 hover:bg-white/20 dark:bg-white/5 dark:hover:bg-white/10 rounded-md flex items-center gap-2"
-                  >
-                    <Upload className={`w-4 h-4 ${iconColor}`} />
-                    Export
-                  </button>
-
-                  <label className="block w-full text-left px-3 py-2 text-sm text-white hover:opacity-90 cursor-pointer bg-white/10 hover:bg-white/20 dark:bg-white/5 dark:hover:bg-white/10 rounded-md relative flex items-center gap-2">
-                    <Download className={`w-4 h-4 ${iconColor}`} />
-                    <span>Import</span>
-                    <input
-                      type="file"
-                      accept="application/json"
-                      className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
-                      onChange={async (e) => {
-                        const file = (e.target as HTMLInputElement).files?.[0]
-                        if (!file) return
-                        try {
-                          const text = await file.text()
-                          const parsed = JSON.parse(text)
-                          onLoadAction(parsed)
-                        } catch (err) {
-                          console.error('Failed to load JSON', err)
-                        } finally {
-                          setMenuOpen(false)
-                        }
-                      }}
-                    />
-                  </label>
-
-                  <button
-                    onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
-                    className="w-full text-left px-3 py-2 text-sm text-white bg-white/10 hover:bg-white/20 dark:bg-white/5 dark:hover:bg-white/10 rounded-md flex items-center gap-2"
-                  >
-                    {theme === 'dark' ? <Sun className={`w-4 h-4 ${iconColor}`} /> : <Moon className={`w-4 h-4 ${iconColor}`} />}
-                    <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
-                  </button>
-                </div>
-              </li>
-            </ul>
-          </div>
-        )}
-      </div>
-
-
+      {/* Theme toggle removed */}
     </header>
   )
 }

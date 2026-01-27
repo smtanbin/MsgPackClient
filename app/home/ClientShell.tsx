@@ -1,32 +1,73 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect, createContext, useContext } from 'react'
 import Navbar from '../Navbar'
 import Footer from '../Footer'
-import EnvPanel from './EnvPanel'
+import { useRouter } from 'next/navigation'
+import { getItem, setItem } from '@/app/utils/db'
+
+
 
 export default function ClientShell({ children }: { children: React.ReactNode }) {
-  const [envOpen, setEnvOpen] = useState(false)
+  const router = useRouter()
 
   // manage baseUrl as state so EnvPanel can be editable
-  const [baseUrl, setBaseUrl] = useState<string>(() => {
-    try {
-      return localStorage.getItem('mpc-base-url') || ''
-    } catch {
-      return ''
-    }
-  })
+  const [baseUrl, setBaseUrl] = useState<string>('')
+
+  // manage header variables
+  const [headerVars, setHeaderVars] = useState<Array<{ key: string; value: string }>>([])
 
   useEffect(() => {
-    try {
-      localStorage.setItem('mpc-base-url', baseUrl)
-      // notify other windows/components in same page that baseUrl changed
-      try { window.dispatchEvent(new CustomEvent('mpc:baseUrl', { detail: baseUrl })) } catch { /* ignore */ }
-    } catch {}
+    const loadBaseUrl = async () => {
+      try {
+        const stored = await getItem('mpc-base-url')
+        if (stored) setBaseUrl(stored)
+      } catch {}
+    }
+    loadBaseUrl()
+  }, [])
+
+  useEffect(() => {
+    const saveBaseUrl = async () => {
+      try {
+        await setItem('mpc-base-url', baseUrl)
+        try { window.dispatchEvent(new CustomEvent('mpc:baseUrl', { detail: baseUrl })) } catch {}
+      } catch {}
+    }
+    saveBaseUrl()
   }, [baseUrl])
 
-  const handleOpenEnv = () => setEnvOpen(true)
-  const handleCloseEnv = () => setEnvOpen(false)
+  useEffect(() => {
+    const loadHeaderVars = async () => {
+      try {
+        const stored = await getItem('mpc-header-vars')
+        if (stored) setHeaderVars(JSON.parse(stored))
+      } catch {}
+    }
+    loadHeaderVars()
+  }, [])
+
+  useEffect(() => {
+    const saveHeaderVars = async () => {
+      try {
+        await setItem('mpc-header-vars', JSON.stringify(headerVars))
+        try { window.dispatchEvent(new CustomEvent('mpc:headerVars', { detail: headerVars })) } catch {}
+      } catch {}
+    }
+    saveHeaderVars()
+  }, [headerVars])
+
+  const handleAddVar = () => {
+    setHeaderVars(prev => [...prev, { key: '', value: '' }])
+  }
+
+  const handleUpdateVar = (index: number, kv: { key: string; value: string }) => {
+    setHeaderVars(prev => prev.map((v, i) => i === index ? kv : v))
+  }
+
+  const handleRemoveVar = (index: number) => {
+    setHeaderVars(prev => prev.filter((_, i) => i !== index))
+  }
 
   const handleSave = () => {
     try {
@@ -67,19 +108,13 @@ export default function ClientShell({ children }: { children: React.ReactNode })
 
   return (
     <>
-      <Navbar onSaveAction={handleSave} onLoadAction={handleLoad} onOpenEnvAction={handleOpenEnv} />
-      <main>{children}</main>
+      <Navbar
+        onSaveAction={handleSave}
+        onLoadAction={handleLoad}
+        onOpenEnvAction={() => router.push('/env')}
+      />
+      {children}
       <Footer />
-
-      {envOpen && (
-        <EnvPanel baseUrl={baseUrl} vars={[]}
-          onBaseUrlChange={(v) => { setBaseUrl(v) }}
-          onAddVar={() => {}}
-          onUpdateVar={() => {}}
-          onRemoveVar={() => {}}
-          onClose={handleCloseEnv}
-        />
-      )}
     </>
   )
 }

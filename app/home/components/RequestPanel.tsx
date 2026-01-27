@@ -84,7 +84,7 @@ export default function RequestPanel({ requestText, onChange }: Props) {
       <div className="flex flex-col flex-1 p-4 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
         <div className="flex-1 flex flex-col">
           <textarea
-            className="flex-1 min-h-[220px] w-full bg-zinc-50/50 border border-black/5 rounded-xl px-4 py-4 text-[13px] font-mono text-zinc-800 shadow-inner focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/20 transition-all custom-scrollbar"
+            className="flex-1 min-h-[220px] w-full bg-zinc-50/50 border border-black/5 rounded-xl px-4 py-4 text-[13px] font-mono text-zinc-800 shadow-inner focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/20 focus:shadow-lg focus:shadow-primary/20 transition-all custom-scrollbar"
             value={requestText}
             onChange={(e) => onChange(e.target.value)}
             placeholder='{ "key": "value" }'
