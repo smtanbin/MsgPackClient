@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import { Package, Zap, Code, Settings, ArrowRight, Github, BookOpen } from 'lucide-react';
 
-
+// Force static generation
+export const dynamic = 'force-static';
 
 export default function DefaultPage() {
 
@@ -27,18 +27,18 @@ export default function DefaultPage() {
           </p>
 
           <div className="flex items-center justify-center gap-4">
-            <Link href="/client">
-              <button className="flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-xl text-lg font-semibold hover:bg-primary/90 transition-all active:scale-95 shadow-lg hover:shadow-xl">
+            <a href="/client">
+              <button className="flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-xl text-lg font-semibold hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl">
                 Get Started
                 <ArrowRight className="w-5 h-5" />
               </button>
-            </Link>
-            <Link href="/env">
-              <button className="flex items-center gap-2 px-8 py-4 bg-white text-gray-900 rounded-xl text-lg font-semibold hover:bg-gray-50 transition-all active:scale-95 shadow-lg border border-gray-200">
+            </a>
+            <a href="/env">
+              <button className="flex items-center gap-2 px-8 py-4 bg-white text-gray-900 rounded-xl text-lg font-semibold hover:bg-gray-50 transition-all shadow-lg border border-gray-200">
                 <Code className="w-4 h-4" />
                 Convator
               </button>
-            </Link>
+            </a>
           </div>
         </div>
 
@@ -190,18 +190,18 @@ export default function DefaultPage() {
                 </p>
               </div>
               <div className="mt-8">
-                <Link href="/client">
-                  <button className="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-xl font-semibold hover:bg-primary/90 transition-all active:scale-95 shadow-lg">
+                <a href="/client">
+                  <button className="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-xl font-semibold hover:bg-primary/90 transition-all shadow-lg">
                     Start Testing Now
                     <ArrowRight className="w-5 h-5" />
                   </button>
-                </Link>
+                </a>
               </div>
             </div>
 
             <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 shadow-2xl">
               <div className="font-mono text-sm">
-          
+
                 <div className="text-green-400 mb-4">{'// Example: Encode data to Pack Tester'}</div>
                 <div className="text-blue-400">const <span className="text-yellow-300">data</span> = {'{'}</div>
                 <div className="text-gray-600 ml-4">name: <span className="text-green-600">&quot;John Doe&quot;</span>,</div>
