@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Block access to API routes
+Disallow: /api/
+
+# Block access to Next.js internal routes
+Disallow: /_next/
+Disallow: /static/
+
+# Allow crawling of main pages
+Allow: /
+Allow: /home
+Allow: /env
+Allow: /convector
+
+# Sitemap
+Sitemap: https://packtester.online/sitemap.xml

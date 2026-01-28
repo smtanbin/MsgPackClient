@@ -1,9 +1,9 @@
-# MsgPackClient
+# Pack Tester
 
-A modern, modular MessagePack testing client inspired by Postman, built with Next.js and React. Designed for easy encoding/decoding, API testing, and developer productivity.
+A modern, modular Pack Tester testing client inspired by Postman, built with Next.js and React. Designed for easy encoding/decoding, API testing, and developer productivity.
 
 ## Features
-- Encode and decode MessagePack to/from JSON and Hex
+- Encode and decode Pack Tester to/from JSON and Hex
 - Multi-endpoint tabbed interface (up to 9 tabs)
 - Custom request headers and body
 - MacOS-style UI with responsive design
@@ -28,15 +28,15 @@ A modern, modular MessagePack testing client inspired by Postman, built with Nex
 ## Usage
 - **Tabs:** Add, rename, or delete endpoints. Each tab is a separate API request context.
 - **Headers:** Add default or custom headers per endpoint.
-- **Request Body:** Write JSON, see live MessagePack hex and size reduction.
-- **Encoder/Decoder:** Convert between JSON and MessagePack Hex, see size stats, copy results.
+- **Request Body:** Write JSON, see live Pack Tester hex and size reduction.
+- **Encoder/Decoder:** Convert between JSON and Pack Tester Hex, see size stats, copy results.
 - **Environment:** Manage base URLs and environment variables.
 - **Mobile:** Fully responsive, tabs become dropdowns.
 
 ## Documentation & References
-- [MessagePack Official Site](https://msgpack.org/)
-- [MessagePack Specification](https://github.com/msgpack/msgpack/blob/master/spec.md)
-- [Project GitHub](https://github.com/smtanbin/MsgPackClient)
+- [Pack Tester Official Site](https://msgpack.org/)
+- [Pack Tester Specification](https://github.com/msgpack/msgpack/blob/master/spec.md)
+- [Project GitHub](https://github.com/smtanbin/pack-tester)
 
 ## Accessibility
 - All interactive elements have ARIA labels and keyboard support.

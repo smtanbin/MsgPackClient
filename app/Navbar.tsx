@@ -4,7 +4,7 @@ import { Upload, Home, Code, Download, Github, Settings, ChevronDown, X } from '
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import logo from '../app/icon0.svg'
+import logo from '../public/assets/SVG/logo.svg'
 
 
 type HeaderProps = {
@@ -47,14 +47,14 @@ export default function Navbar({ onSaveAction, onLoadAction }: HeaderProps) {
 
   return (
     <header
-      className="sticky top-0 z-50 flex items-center justify-between px-8 py-4 md:py-5 w-full max-w-none rounded-none mx-0 bg-transparent backdrop-blur-2xl shadow-none"
-      style={{ backgroundColor: 'var(--color-nav-bg)' }}
+      className="sticky  top-0 z-50 flex items-center justify-between px-8 py-4 md:py-5 w-full max-w-none rounded-none mx-0 bg-transparent backdrop-blur-2xl shadow-none"
+      style={{ backgroundColor: 'var(--color-nav-bg)', boxShadow: 'var(--shadow-nav)' }}
     >
       <div className="flex items-center gap-3">
-        <Link href="/home" className="flex items-center gap-3 focus:outline-none" aria-label="Go to Home">
+        <Link href="/" className="flex items-center gap-3 focus:outline-none" aria-label="Go to Home">
           <Image
             src={logo}
-            alt="MsgPack Logo"
+            alt="Pack Tester Logo"
             width={32}
             height={32}
             className="h-8 w-8 rounded-md"
@@ -62,7 +62,7 @@ export default function Navbar({ onSaveAction, onLoadAction }: HeaderProps) {
         </Link>
         <div className="flex flex-col leading-tight">
           <h1 className="text-[15px] md:text-[17px] text-primary font-semibold">Pack Tester</h1>
-          <p className="text-[11px] md:text-[12px] text-gray-500">Encode & decode MessagePack</p>
+          <p className="text-[11px] md:text-[12px] text-gray-500">Encode & decode Pack Tester</p>
         </div>
       </div>
 
@@ -72,7 +72,7 @@ export default function Navbar({ onSaveAction, onLoadAction }: HeaderProps) {
           }`}
       >
         <Link
-          href="/home"
+          href="/client"
           onClick={() => setMenuOpen(false)}
           className="px-5 py-2 rounded-full text-sm font-medium bg-primary text-white hover:bg-primary/90 transition inline-flex items-center gap-2"
         >
@@ -85,7 +85,7 @@ export default function Navbar({ onSaveAction, onLoadAction }: HeaderProps) {
           Converter
         </Link>
 
-        <a href="https://github.com/smtanbin/MsgPackClient" target="_blank" rel="noreferrer" className="hover:text-primary inline-flex items-center gap-2">
+        <a href="https://github.com/smtanbin/pack-tester" target="_blank" rel="noreferrer" className="hover:text-primary inline-flex items-center gap-2">
           <Github className="w-4 h-4" />
           Project
         </a>

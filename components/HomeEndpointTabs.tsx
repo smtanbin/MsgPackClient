@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import EndpointTabs from '@/app/home/EndpointTabs'
+import EndpointTabs from '@/app/client/EndpointTabs'
 import { getItem, setItem } from '@/app/utils/db'
 
 type Endpoint = { name: string; url?: string }

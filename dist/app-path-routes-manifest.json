@@ -1,0 +1,14 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/proxy/route": "/api/proxy",
+  "/apple-icon.png/route": "/apple-icon.png",
+  "/client/page": "/client",
+  "/convector/page": "/convector",
+  "/env/page": "/env",
+  "/favicon.ico/route": "/favicon.ico",
+  "/icon0.svg/route": "/icon0.svg",
+  "/icon1.png/route": "/icon1.png",
+  "/manifest.json/route": "/manifest.json",
+  "/page": "/"
+}

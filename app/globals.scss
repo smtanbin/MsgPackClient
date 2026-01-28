@@ -70,7 +70,11 @@ $accent-400: color.mix(black, $accent-blue, 25%);
   --color-accent-100: #{$accent-100};
   --color-accent-200: #{$accent-200};
   --color-accent-300: #{$accent-300};
-  --color-accent-400: #{$accent-400};
+  /* Common UI colors */
+  --color-text-dark: #1d1d1f;
+  --color-text-gray: #86868b;
+  --color-blue: #007AFF;
+  --color-red: #FF3B30;
 
   --color-nav-bg: rgba(255, 255, 255, 0.48);
 }
@@ -144,6 +148,35 @@ $accent-400: color.mix(black, $accent-blue, 25%);
   color: var(--color-text);
 }
 
+/* Common UI colors */
+.text-dark {
+  color: var(--color-text-dark);
+}
+
+.text-gray {
+  color: var(--color-text-gray);
+}
+
+.text-blue {
+  color: var(--color-blue);
+}
+
+.text-red {
+  color: var(--color-red);
+}
+
+.bg-blue {
+  background-color: var(--color-blue);
+}
+
+.bg-red {
+  background-color: var(--color-red);
+}
+
+.bg-gradient-home{
+  background: linear-gradient(15deg, var(--color-primary-50) 10%, #ffffff 100%);
+}
+
 /* =========================
    ANIMATED BUTTON
 ========================= */
@@ -161,6 +194,19 @@ $accent-400: color.mix(black, $accent-blue, 25%);
   }
 }
 
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 8s ease infinite;
+}
+
 .button-bg {
   background: conic-gradient(from 0deg,
       var(--color-primary),
@@ -170,6 +216,42 @@ $accent-400: color.mix(black, $accent-blue, 25%);
       var(--color-primary-800));
   background-size: 300% 300%;
   animation: shine 6s ease-out infinite;
+}
+
+/* =========================
+   PERFORMANCE OPTIMIZATIONS
+========================= */
+
+/* Optimize font loading */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/geist/v1/4XdqXgAAXh9EzQ8a8lTl.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Reduce paint on scroll */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Optimize for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .hover\:scale-110:hover {
+    transform: none;
+  }
 }
 
 /* =========================

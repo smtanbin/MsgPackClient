@@ -41,7 +41,7 @@ function copyToClipboard(text: string) {
 }
 
 export default function EncoderDecoderPage() {
-  const [jsonInput, setJsonInput] = useState('{\n  "message": "Hello MessagePack"\n}')
+  const [jsonInput, setJsonInput] = useState('{\n  "message": "Hello Pack Tester"\n}')
   const [hexInput, setHexInput] = useState('')
 
   // 1. Deriving Hex Output from JSON Input

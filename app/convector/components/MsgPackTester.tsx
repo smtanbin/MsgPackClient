@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react'
 import { encode, decode } from '@msgpack/msgpack'
-import HeadersPanel from '@/app/home/components/RequestHeadersPanel'
+import HeadersPanel from '@/app/client/components/RequestHeadersPanel'
 import HexDecodePanel from './HexDecodePanel'
-import RequestPanel from '@/app/home/components/RequestPanel'
-import ResponsePanel from '@/app/home/components/ResponsePanel'
-import URLBar from '@/app/home/URLBar'
+import RequestPanel from '@/app/client/components/RequestPanel'
+import ResponsePanel from '@/app/client/components/ResponsePanel'
+import URLBar from '@/app/client/URLBar'
 import { getItem, setItem } from '@/app/utils/db'
 
 
@@ -253,11 +253,11 @@ export default function MsgPackTester({ baseUrl, envVars }: Props) {
             <div className="bg-white/60 border border-black/10 rounded-xl p-1 shadow-sm">
               <div className="flex">
                 <button
-                  className={`px-3 py-1.5 text-[12px] rounded-lg ${leftTab === 'json' ? 'bg-white border border-black/10 text-[#1d1d1f]' : 'text-[#86868b]'}`}
+                  className={`px-3 py-1.5 text-[12px] rounded-lg ${leftTab === 'json' ? 'bg-white border border-black/10 text-dark' : 'text-gray'}`}
                   onClick={() => setLeftTab('json')}
                 >JSON</button>
                 <button
-                  className={`px-3 py-1.5 text-[12px] rounded-lg ${leftTab === 'hex' ? 'bg-white border border-black/10 text-[#1d1d1f]' : 'text-[#86868b]'}`}
+                  className={`px-3 py-1.5 text-[12px] rounded-lg ${leftTab === 'hex' ? 'bg-white border border-black/10 text-dark' : 'text-gray'}`}
                   onClick={() => setLeftTab('hex')}
                 >Hex</button>
               </div>
@@ -267,6 +267,7 @@ export default function MsgPackTester({ baseUrl, envVars }: Props) {
               <>
                 <HeadersPanel
                   customHeaders={customHeaders}
+                  headerVars={envVars}
                   onAdd={() => setCustomHeaders([...customHeaders, { key: '', value: '' }])}
                   onUpdate={(idx: number, kv: HeaderKV) => {
                     const updated = [...customHeaders]

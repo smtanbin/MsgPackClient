@@ -1,7 +1,7 @@
 # MsgPackClient - AI Coding Agent Instructions
 
 ## Project Overview
-A modern MessagePack testing client built with Next.js 16.1+ and React 19, similar to Postman but specialized for MessagePack binary serialization. The app provides two main features: API testing with MsgPack encoding/decoding, and a standalone encoder/decoder tool.
+A modern Pack Tester testing client built with Next.js 16.1+ and React 19, similar to Postman but specialized for Pack Tester binary serialization. The app provides two main features: API testing with MsgPack encoding/decoding, and a standalone encoder/decoder tool.
 
 ## Architecture & Key Components
 
@@ -30,7 +30,7 @@ Each tab represents a separate API endpoint with independent:
 
 Max 9 tabs enforced in `addEndpoint()` function.
 
-### MessagePack Encoding/Decoding
+### Pack Tester Encoding/Decoding
 Uses `@msgpack/msgpack` library (v3.1.3):
 ```typescript
 import { encode, decode } from '@msgpack/msgpack'
@@ -158,7 +158,7 @@ Do NOT suggest Redux, Zustand, or Context API. State management is intentionally
 4. Use Lucide icons from `lucide-react`
 5. Add to [app/home/page.tsx](../app/home/page.tsx) layout
 
-### Modifying MessagePack Handling
+### Modifying Pack Tester Handling
 - Encoding logic: [RequestPanel.tsx](../app/home/components/RequestPanel.tsx)
 - Decoding logic: [ResponsePanel.tsx](../app/home/components/ResponsePanel.tsx)
 - Bidirectional: [convector/page.tsx](../app/convector/page.tsx)
@@ -167,7 +167,7 @@ Do NOT suggest Redux, Zustand, or Context API. State management is intentionally
 ## Testing & Debugging
 - Use browser DevTools → Application → LocalStorage to inspect state
 - Check Network tab for `/api/proxy` requests
-- MessagePack errors typically show in encode/decode try-catch blocks
+- Pack Tester errors typically show in encode/decode try-catch blocks
 - Invalid JSON shows inline error in encoder panels
 
 ## Accessibility

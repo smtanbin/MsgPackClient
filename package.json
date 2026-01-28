@@ -1,11 +1,11 @@
 {
-  "name": "msgpackclient",
+  "name": "pack-tester",
   "version": "0.1.0",
   "private": true,
-  "description": "A modern, modular MessagePack testing client inspired by Postman, built with Next.js and React.",
+  "description": "A modern, modular Pack Tester testing client inspired by Postman, built with Next.js and React.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/smtanbin/MsgPackClient"
+    "url": "https://github.com/smtanbin/pack-tester"
   },
   "author": "smtanbin",
   "license": "MIT",
