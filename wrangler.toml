@@ -1,0 +1,19 @@
+name = "pack-tester"
+compatibility_date = "2024-01-01"
+
+# Cloudflare Pages configuration for Next.js
+pages_build_output_dir = ".next"
+
+[build]
+command = "npx @cloudflare/next-on-pages@1"
+cwd = "."
+
+[build.environment_variables]
+NODE_VERSION = "22.16.0"
+
+# Pages configuration
+[[pages_build_config]]
+build_command = "npx @cloudflare/next-on-pages@1"
+destination_dir = ".next"
+root_dir = "."
+build_caching = true
