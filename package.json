@@ -10,7 +10,7 @@
   "author": "smtanbin",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev",  
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
