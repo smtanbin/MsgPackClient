@@ -16,7 +16,8 @@
     "dev": "next dev",  
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "cf-build": "opennextjs-cloudflare"
   },
   "dependencies": {
     "@msgpack/msgpack": "^3.1.3",

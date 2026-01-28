@@ -4,7 +4,7 @@ compatibility_date = "2024-01-01"
 
 # Cloudflare Workers configuration for Next.js using OpenNext
 [build]
-command = "npm exec opennextjs-cloudflare"
+command = "npm run cf-build"
 cwd = "."
 
 [[kv_namespaces]]
