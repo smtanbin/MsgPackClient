@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Cloudflare Pages compatibility - remove custom distDir
+  // Cloudflare Workers compatibility
   // distDir: 'dist',
 
   // Performance optimizations
@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    // Cloudflare Pages specific image config
+    // Cloudflare Workers specific image config
     loader: 'default',
     path: '/_next/image',
   },
