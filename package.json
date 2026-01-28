@@ -5,7 +5,10 @@
   "description": "A modern, modular Pack Tester testing client inspired by Postman, built with Next.js and React.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/smtanbin/pack-tester"
+    "url": "https://github.com/smtanbin/MsgPackClient"
+  },
+  "npmConfig": {
+    "packageManager": "npm@latest"
   },
   "author": "smtanbin",
   "license": "MIT",
