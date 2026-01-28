@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-export const runtime = 'nodejs'
+export const runtime = 'edge'
 
 function filterHopByHopHeaders(headers: Headers) {
   const out: Record<string, string> = {}

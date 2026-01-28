@@ -4,19 +4,8 @@ compatibility_date = "2024-01-01"
 
 # Cloudflare Workers configuration for Next.js
 [build]
-command = "npx @cloudflare/next-on-pages@1"
+command = "pnpm dlx @cloudflare/next-on-pages@1"
 cwd = "."
 
 [build.environment_variables]
 NODE_VERSION = "22.16.0"
-
-# Build caching configuration for faster rebuilds
-# Read more: https://developers.cloudflare.com/workers/wrangler/configuration/#build
-[build.upload]
-format = "modules"
-main = ".next/worker.js"
-
-# Enable build caching
-[[build.cache]]
-# Cache node_modules and build artifacts
-paths = ["node_modules", ".next/cache"]
