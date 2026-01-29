@@ -13,33 +13,31 @@
   "author": "smtanbin",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",  
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "cf-build": "opennextjs-cloudflare"
+    "cf-build": "opennextjs-cloudflare build"
   },
   "dependencies": {
     "@msgpack/msgpack": "^3.1.3",
     "lucide": "^0.563.0",
     "lucide-react": "^0.563.0",
-    "next": "16.1.4",
+    "next": "^16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "sass": "^1.97.3"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.16.0",
     "@tailwindcss/postcss": "^4.1.18",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/node": "^20.19.30",
+    "@types/react": "^19.2.10",
+    "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.23",
-    "eslint": "^9",
+    "eslint": "^9.39.2",
     "eslint-config-next": "16.1.4",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.18",
-    "typescript": "^5",
-    "wrangler": "^4.61.0"
+    "typescript": "^5.9.3"
   }
 }
