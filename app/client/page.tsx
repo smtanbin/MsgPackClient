@@ -231,22 +231,36 @@ export default function Home() {
       const { decode } = await import('@msgpack/msgpack');
       let decoded: unknown = null;
       let rawHex = '';
+      let responseText: string | null = null;
+      let responseError: string | null = null;
 
       if (respBody.byteLength > 0) {
+        const uint8 = new Uint8Array(respBody);
         try {
-          const uint8 = new Uint8Array(respBody);
           decoded = decode(uint8);
           rawHex = Array.from(uint8).map(b => b.toString(16).padStart(2, '0')).join(' ');
-        } catch (e) {
-          // If decoding fails, just show raw hex
-          const uint8 = new Uint8Array(respBody);
-          rawHex = Array.from(uint8).map(b => b.toString(16).padStart(2, '0')).join(' ');
+        } catch {
+          try {
+            responseText = new TextDecoder().decode(uint8);
+            try {
+              decoded = JSON.parse(responseText);
+            } catch {
+              decoded = responseText;
+            }
+            rawHex = Array.from(uint8).map(b => b.toString(16).padStart(2, '0')).join(' ');
+          } catch {
+            rawHex = Array.from(uint8).map(b => b.toString(16).padStart(2, '0')).join(' ');
+          }
         }
+      }
+
+      if (!resp.ok) {
+        responseError = `HTTP ${resp.status} ${resp.statusText}`;
       }
 
       setResponseData({
         statusLine: `${resp.status} ${resp.statusText}`,
-        error: null,
+        error: responseError,
         responseDecoded: decoded,
         responseRaw: rawHex
       });

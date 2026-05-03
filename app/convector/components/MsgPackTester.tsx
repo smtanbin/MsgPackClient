@@ -32,11 +32,16 @@ function applyVars(str: string, vars: KV[]) {
 }
 
 function resolveUrl(input: string, baseUrl: string) {
-  const isAbsolute = /^https?:\/\//i.test(input)
-  if (isAbsolute || !baseUrl) return input
-  if (!input) return baseUrl
+  const trimmed = input.trim()
+  const isAbsolute = /^https?:\/\//i.test(trimmed)
+  const looksLikeHost = /^(localhost|\d{1,3}(?:\.\d{1,3}){3}|[a-z0-9.-]*\.[a-z]{2,})(:\d+)?(\/.*)?$/i.test(trimmed)
+
+  if (isAbsolute) return trimmed
+  if (looksLikeHost) return `http://${trimmed}`
+  if (!baseUrl) return trimmed
+  if (!trimmed) return baseUrl
   const a = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl
-  const b = input.startsWith('/') ? input : `/${input}`
+  const b = trimmed.startsWith('/') ? trimmed : `/${trimmed}`
   return a + b
 }
 
@@ -212,6 +217,7 @@ export default function MsgPackTester({ baseUrl, envVars }: Props) {
       const arr = new Uint8Array(await resp.arrayBuffer())
       setResponseRaw(bytesToHex(arr))
       setStatusLine(`${resp.status} ${resp.statusText}`)
+      setError(!resp.ok ? `HTTP ${resp.status} ${resp.statusText}` : null)
 
       try {
         const dec = decode(arr)
@@ -225,7 +231,11 @@ export default function MsgPackTester({ baseUrl, envVars }: Props) {
             setResponseDecoded(text)
           }
         } catch (readErr: unknown) {
-          setError('Failed to decode response: ' + String(readErr))
+          if (!resp.ok) {
+            setResponseDecoded(null)
+          } else {
+            setError('Failed to decode response: ' + String(readErr))
+          }
         }
       }
     } catch (err: unknown) {
